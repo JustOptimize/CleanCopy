@@ -2,7 +2,7 @@
 // @name         CleanCopy
 // @namespace    http://tampermonkey.net/
 // @version      2024-01-19
-// @description  Remove tracking parameters from copied URLs
+// @description  Remove tracking parameters when copying URL from browser address bar or links on the page.
 // @author       You
 // @match        https://*/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
