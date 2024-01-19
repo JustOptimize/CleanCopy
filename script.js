@@ -10,21 +10,22 @@
 // ==/UserScript==
 
 const blacklisted_params = [
-    "utm_source",
+    "utm_source", // Google Analytics
     "utm_medium",
     "utm_campaign",
     "utm_term",
     "utm_content",
-    "fbclid",
-    "gclid",
-    "gclsrc",
-    "dclid",
-    "msclkid",
-    "yclid",
-    "utm_referrer",
+    "utm_referrer", 
     "utm_name",
     "utm_id",
+    "fbclid", // Facebook
+    "gclid", // Google Ads
+    "gclsrc",
+    "dclid", // Google Display Ads
+    "msclkid", // Microsoft Ads
+    "yclid", // Yandex Ads
     "ysclid",
+	"si" // Youtube shorts
 ];
 
 (function() {
@@ -32,7 +33,7 @@ const blacklisted_params = [
 
     document.addEventListener('copy', function(e) {        
 		let url = undefined;
-		const content = e?.target?.innerHTML;
+		const content = e?.target?.innerHTML || e?.target?.formAction;
 
 		if (!content) {
 			console.log("No content");
