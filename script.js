@@ -1,11 +1,11 @@
 // ==UserScript==
 // @name         CleanCopy
 // @namespace    https://github.com/JustOptimize/CleanCopy/
-// @version      0.0.1
-// @description  Remove tracking parameters when copying URL from browser address bar or links on the page.
+// @version      0.0.2
+// @description  Remove tracking parameters when copying URL
 // @author       Oggetto
 // @match        https://*/*
-// @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
+// @icon         https://github.com/JustOptimize/CleanCopy/blob/main/icon.png?raw=true
 // @grant        none
 // @downloadURL  https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/script.js
 // @updateURL    https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/script.js
@@ -50,7 +50,7 @@ const blacklisted_params = [
 			blacklisted_params.forEach((param) => {
 				url.searchParams.delete(param);
 			});
-	
+
 			// Copy new URL to clipboard
 			e.clipboardData.setData('text/plain', url.href);
 		}catch(err){
