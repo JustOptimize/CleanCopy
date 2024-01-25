@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CleanCopy
 // @namespace    https://github.com/JustOptimize/CleanCopy/
-// @version      0.0.2
+// @version      0.0.3
 // @description  Remove tracking parameters when copying URL
 // @author       Oggetto
 // @match        https://*/*
@@ -36,7 +36,7 @@ const blacklisted_params = [
     document.addEventListener('copy', function(e) {
         e.preventDefault();
 
-		const content = e?.target?.innerHTML || e?.target?.formAction;
+        const content = document.getSelection()?.toString();
 
 		if (!content) {
             e.clipboardData.setData('text/plain', '');
