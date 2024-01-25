@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         CleanCopy
-// @namespace    http://tampermonkey.net/
-// @version      2024-01-19
+// @namespace    https://github.com/JustOptimize/CleanCopy/
+// @version      0.0.1
 // @description  Remove tracking parameters when copying URL from browser address bar or links on the page.
-// @author       You
+// @author       Oggetto
 // @match        https://*/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
+// @downloadURL  https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/script.js
+// @updateURL    https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/script.js
 // ==/UserScript==
 
 const blacklisted_params = [
@@ -15,7 +17,7 @@ const blacklisted_params = [
     "utm_campaign",
     "utm_term",
     "utm_content",
-    "utm_referrer", 
+    "utm_referrer",
     "utm_name",
     "utm_id",
     "fbclid", // Facebook
@@ -31,30 +33,29 @@ const blacklisted_params = [
 (function() {
     'use strict';
 
-    document.addEventListener('copy', function(e) {        
-		let url = undefined;
+    document.addEventListener('copy', function(e) {
+        e.preventDefault();
+
 		const content = e?.target?.innerHTML || e?.target?.formAction;
 
 		if (!content) {
-			console.log("No content");
+            e.clipboardData.setData('text/plain', '');
 			return;
 		}
 
 		try{
-			url = new URL(content);
+			const url = new URL(content);
+
+			// Remove blacklisted params
+			blacklisted_params.forEach((param) => {
+				url.searchParams.delete(param);
+			});
+	
+			// Copy new URL to clipboard
+			e.clipboardData.setData('text/plain', url.href);
 		}catch(err){
-			console.log("Not a URL");
+            e.clipboardData.setData('text/plain', content);
 			return;
 		}
-
-		e.preventDefault();
-
-		// Remove blacklisted params
-		blacklisted_params.forEach((param) => {
-			url.searchParams.delete(param);
-		});
-
-		// Copy new URL to clipboard
-		e.clipboardData.setData('text/plain', url.href);
   });
 })();
