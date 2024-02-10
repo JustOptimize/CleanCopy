@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CleanCopy
 // @namespace    https://github.com/JustOptimize/CleanCopy/
-// @version      0.0.3
+// @version      0.0.4
 // @description  Remove tracking parameters when copying URL
 // @author       Oggetto
 // @match        https://*/*
@@ -27,7 +27,12 @@ const blacklisted_params = [
     "msclkid", // Microsoft Ads
     "yclid", // Yandex Ads
     "ysclid",
-	"si" // Youtube shorts
+	"si",  // Youtube shorts
+    "sender_device",
+    "sender_web_id",
+    "share",
+    "share_source",
+    "is_from_webapp"
 ];
 
 (function() {
