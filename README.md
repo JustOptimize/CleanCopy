@@ -1,3 +1,3 @@
 # CleanCopy
 
-A tampermonkey script that removes tracking parameters when coping URLs
+A userscript that removes tracking parameters from copied URLs.
