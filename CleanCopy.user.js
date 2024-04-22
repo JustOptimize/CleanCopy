@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CleanCopy
 // @namespace    https://github.com/JustOptimize/CleanCopy/
-// @version      0.0.5
+// @version      0.0.6
 // @description  Remove tracking parameters when copying URL
 // @author       Oggetto
 // @match        https://*/*
