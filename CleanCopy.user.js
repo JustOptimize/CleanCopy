@@ -7,8 +7,8 @@
 // @match        https://*/*
 // @icon         https://github.com/JustOptimize/CleanCopy/blob/main/icon.png?raw=true
 // @grant        none
-// @downloadURL  https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/script.js
-// @updateURL    https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/script.js
+// @downloadURL  https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/CleanCopy.user.js
+// @updateURL    https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/CleanCopy.user.js
 // ==/UserScript==
 
 const blacklisted_params = [
