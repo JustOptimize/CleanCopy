@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CleanCopy
 // @namespace    https://github.com/JustOptimize/CleanCopy/
-// @version      0.1.0
+// @version      0.1.1
 // @description  Remove tracking parameters when copying URL
 // @author       Oggetto
 // @match        https://*/*
@@ -51,6 +51,16 @@ const blacklisted_params = [
 			}
 
 			try {
+				// Only attempt to parse as URL when it's an absolute http/https/ftp URL.
+				// This prevents non-URL text (like YAML or multi-line text) from being
+				// treated as a relative URL and percent-encoded.
+				const isAbsoluteUrl = /^\s*(?:https?:\/\/|ftp:\/\/)\S+/i;
+				if (!isAbsoluteUrl.test(content)) {
+					e.clipboardData.setData("text/plain", content);
+					console.debug('CleanCopy: copy content is not an absolute URL, wrote original');
+					return;
+				}
+
 				const url = new URL(content);
 
 				blacklisted_params.forEach((param) => {
@@ -71,6 +81,11 @@ const blacklisted_params = [
 
 	const sanitizeText = (text) => {
 		if (!text || typeof text !== "string") return text;
+
+		// Only sanitize absolute http/https/ftp URLs. Avoid parsing arbitrary
+		// text which could be treated as a relative URL and encoded.
+		const isAbsoluteUrl = /^\s*(?:https?:\/\/|ftp:\/\/)\S+/i;
+		if (!isAbsoluteUrl.test(text)) return text;
 
 		try {
 			const url = new URL(text);
