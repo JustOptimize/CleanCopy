@@ -1,12 +1,14 @@
 // ==UserScript==
 // @name         CleanCopy
 // @namespace    https://github.com/JustOptimize/CleanCopy/
-// @version      0.1.1
+// @version      0.2.0
 // @description  Remove tracking parameters when copying URL
 // @author       Oggetto
 // @match        https://*/*
 // @icon         https://github.com/JustOptimize/CleanCopy/blob/main/icon.png?raw=true
 // @grant        none
+// @grant        GM_registerMenuCommand
+// @grant        GM_setClipboard
 // @downloadURL  https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/CleanCopy.user.js
 // @updateURL    https://raw.githubusercontent.com/JustOptimize/CleanCopy/main/CleanCopy.user.js
 // ==/UserScript==
@@ -151,5 +153,34 @@ const blacklisted_params = [
 		}
 	} catch {
 		console.debug('CleanCopy: clipboard API not accessible, skipping programmatic interception');
+	}
+
+	try {
+		const sanitizeClipboardCommand = async () => {
+			try {
+				const input = prompt('Paste text to sanitize (Cancel to abort):');
+				if (input === null) {
+					console.debug('CleanCopy: user canceled prompt');
+					return;
+				}
+				console.debug('CleanCopy: user input -> %s', input);
+				const sanitized = sanitizeText(input);
+				if (sanitized === input) {
+					console.info('CleanCopy: content unchanged');
+					alert('CleanCopy: content unchanged (nothing to sanitize)');
+				} else {
+					await GM_setClipboard(sanitized);
+					console.info('CleanCopy: sanitized content and wrote to clipboard');
+					alert('CleanCopy: sanitized content was copied to clipboard');
+				}
+			} catch (err) {
+				console.error('CleanCopy: failed to sanitize/copy via prompt', err);
+				alert('CleanCopy: failed to sanitize/copy. See console for details.');
+			}
+		};
+
+		GM_registerMenuCommand('Clean clipboard (sanitize URLs)', sanitizeClipboardCommand);
+	} catch (err) {
+		console.debug('CleanCopy: unable to register Tampermonkey menu command', err);
 	}
 })();
